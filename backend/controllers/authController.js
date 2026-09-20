@@ -213,7 +213,7 @@ const deleteAddress = async (req, res, next) => {
 // @route   GET /api/auth/google
 // @access  Public
 const googleAuth = (req, res, next) => {
-  const clientUrl = (process.env.CLIENT_URL || 'http://localhost:5173').replace(/\/$/, '');
+  const clientUrl = (process.env.CLIENT_URL || 'https://plant-nest.vercel.app').replace(/\/$/, '');
   const clientId = process.env.GOOGLE_CLIENT_ID;
   const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
 
@@ -240,7 +240,7 @@ const googleAuth = (req, res, next) => {
 // @access  Public
 const googleAuthCallback = (req, res, next) => {
   passport.authenticate('google', { session: false }, (err, user, info) => {
-    const clientUrl = (process.env.CLIENT_URL || 'http://localhost:5173').replace(/\/$/, '');
+    const clientUrl = (process.env.CLIENT_URL || 'https://plant-nest.vercel.app').replace(/\/$/, '');
 
     if (err) {
       console.error('Google OAuth Authentication Error:', err);

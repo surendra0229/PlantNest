@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { plantService } from '../../services/api';
+import { plantService, getBackendUrl } from '../../services/api';
 import { useToast } from '../../context/ToastContext';
 import AdminLayout from '../../components/layout/AdminLayout';
 import ImageInputManager from '../../components/admin/ImageInputManager';
@@ -235,7 +235,7 @@ const AdminPlants = () => {
                   const imgUrl = plant.images?.[0];
                   const fullImgSrc = imgUrl?.startsWith('http') || imgUrl?.startsWith('/')
                     ? imgUrl
-                    : `http://localhost:5000${imgUrl}`;
+                    : `${getBackendUrl()}${imgUrl}`;
 
                   return (
                     <tr key={plant._id} className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition">

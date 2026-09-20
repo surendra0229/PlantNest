@@ -4,7 +4,7 @@ const User = require('../models/User');
 
 const googleClientId = process.env.GOOGLE_CLIENT_ID;
 const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
-const googleCallbackUrl = process.env.GOOGLE_CALLBACK_URL || 'http://localhost:5000/api/auth/google/callback';
+const googleCallbackUrl = process.env.GOOGLE_CALLBACK_URL || 'https://plantnest-rcp4.onrender.com/api/auth/google/callback';
 
 if (googleClientId && googleClientSecret) {
   passport.use(
@@ -12,7 +12,8 @@ if (googleClientId && googleClientSecret) {
       {
         clientID: googleClientId,
         clientSecret: googleClientSecret,
-        callbackURL: googleCallbackUrl
+        callbackURL: googleCallbackUrl,
+        proxy: true
       },
       async (accessToken, refreshToken, profile, done) => {
         try {

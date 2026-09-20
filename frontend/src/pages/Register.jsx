@@ -4,6 +4,8 @@ import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import { UserPlus, Mail, Lock, Eye, EyeOff, User, Phone, Loader2, ShieldCheck, ArrowLeft } from 'lucide-react';
 
+import { getBackendUrl } from '../services/api';
+
 const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -49,10 +51,8 @@ const Register = () => {
 
   const handleGoogleLogin = () => {
     toast.info('Redirecting to Google Sign-In...');
-    const backendUrl = import.meta.env.VITE_API_URL
-      ? import.meta.env.VITE_API_URL.replace(/\/api\/?$/, '')
-      : 'http://localhost:5000';
-    window.location.href = `${backendUrl}/api/auth/google`;
+    const googleAuthUrl = `${(import.meta.env.VITE_API_URL || 'https://plantnest-rcp4.onrender.com/api').replace(/\/$/, '')}/auth/google`;
+    window.location.href = googleAuthUrl;
   };
 
   return (

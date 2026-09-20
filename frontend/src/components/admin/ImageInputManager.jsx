@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { plantService } from '../../services/api';
+import { plantService, getBackendUrl } from '../../services/api';
 import { useToast } from '../../context/ToastContext';
 import { Upload, Camera, Trash2, RefreshCw, Loader2, Check, AlertCircle, Image as ImageIcon } from 'lucide-react';
 
@@ -208,7 +208,7 @@ const ImageInputManager = ({ value, onChange, label = "Product Image" }) => {
         <div className="relative group p-3 rounded-2xl bg-white dark:bg-slate-800 border-2 border-emerald-500/40 dark:border-slate-700 flex flex-col sm:flex-row items-center gap-4 shadow-md transition">
           <div className="relative w-32 h-32 rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shrink-0">
             <img
-              src={value.startsWith('http') || value.startsWith('/') ? value : `http://localhost:5000${value}`}
+              src={value.startsWith('http') || value.startsWith('/') ? value : `${getBackendUrl()}${value}`}
               alt="Product Preview"
               className="w-full h-full object-cover"
               onError={(e) => { e.target.style.display = 'none'; }}

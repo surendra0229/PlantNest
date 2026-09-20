@@ -84,37 +84,50 @@ const seedDefaultKnowledge = async () => {
 
 const app = express();
 
+// Enable reverse proxy trust (Render, Vercel, Nginx, Heroku) for HTTPS cookies & headers
+app.enable('trust proxy');
+
 // Security Headers
 app.use(helmet({
   crossOriginResourcePolicy: { policy: 'cross-origin' }
 }));
 
-// CORS Configuration — allow frontend dev origins (direct + proxy)
+// CORS Configuration — allow frontend dev & production origins
 const allowedOrigins = [
-  process.env.CLIENT_URL || 'http://localhost:5173',
+  process.env.CLIENT_URL,
+  'https://plant-nest.vercel.app',
+  'https://plantnest-rcp4.onrender.com',
   'http://localhost:5173',
   'http://127.0.0.1:5173',
   'http://localhost:3000',
   'http://127.0.0.1:3000'
-];
+].filter(Boolean);
 
 app.use(cors({
   origin: function (origin, callback) {
     // Allow requests with no origin (e.g., Postman, mobile apps, same-origin)
-    // or any explicitly allowed origin
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      // Allow all other localhost variants in development
-      if (process.env.NODE_ENV !== 'production' && (
-        origin.startsWith('http://localhost:') ||
-        origin.startsWith('http://127.0.0.1:')
-      )) {
-        callback(null, true);
-      } else {
-        callback(null, false);
-      }
+    if (!origin) return callback(null, true);
+
+    // Allow explicitly listed origins or hosted domains
+    if (
+      allowedOrigins.includes(origin) ||
+      origin.endsWith('.onrender.com') ||
+      origin.endsWith('.vercel.app') ||
+      origin.endsWith('.netlify.app')
+    ) {
+      return callback(null, true);
     }
+
+    // Allow all localhost variants in development
+    if (process.env.NODE_ENV !== 'production' && (
+      origin.startsWith('http://localhost:') ||
+      origin.startsWith('http://127.0.0.1:')
+    )) {
+      return callback(null, true);
+    }
+
+    // Default allow for flexibility in production deployment
+    callback(null, true);
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { adminService } from '../../services/api';
+import { adminService, getBackendUrl } from '../../services/api';
 import AdminLayout from '../../components/layout/AdminLayout';
 import {
   Users,
@@ -214,7 +214,7 @@ const AdminDashboard = () => {
                   <div className="flex items-center gap-3">
                     {plant.images?.[0] && (
                       <img
-                        src={plant.images[0].startsWith('http') || plant.images[0].startsWith('/') ? plant.images[0] : `http://localhost:5000${plant.images[0]}`}
+                        src={plant.images[0].startsWith('http') || plant.images[0].startsWith('/') ? plant.images[0] : `${getBackendUrl()}${plant.images[0]}`}
                         alt=""
                         className="w-11 h-11 rounded-xl object-cover border border-slate-200 dark:border-slate-700"
                       />

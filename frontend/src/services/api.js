@@ -1,4 +1,12 @@
-const API_BASE = '/api';
+export const getBackendUrl = () => {
+  const envUrl = import.meta.env.VITE_API_URL;
+  if (envUrl && envUrl.startsWith('http')) {
+    return envUrl.replace(/\/api\/?$/, '').replace(/\/$/, '');
+  }
+  return 'https://plantnest-rcp4.onrender.com';
+};
+
+const API_BASE = (import.meta.env.VITE_API_URL || 'https://plantnest-rcp4.onrender.com/api').replace(/\/$/, '');
 
 export const apiCall = async (endpoint, method = 'GET', data = null) => {
   const options = {

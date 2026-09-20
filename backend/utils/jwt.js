@@ -3,6 +3,28 @@ const jwt = require('jsonwebtoken');
 const USER_COOKIE = 'plantnest_user_token';
 const ADMIN_COOKIE = 'plantnest_admin_token';
 
+const getCookieOptions = () => {
+  const isProduction = process.env.NODE_ENV === 'production' || process.env.RENDER || (process.env.CLIENT_URL && !process.env.CLIENT_URL.includes('localhost'));
+  return {
+    expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+    httpOnly: true,
+    secure: isProduction ? true : false,
+    sameSite: isProduction ? 'none' : 'lax',
+    path: '/'
+  };
+};
+
+const getClearCookieOptions = () => {
+  const isProduction = process.env.NODE_ENV === 'production' || process.env.RENDER || (process.env.CLIENT_URL && !process.env.CLIENT_URL.includes('localhost'));
+  return {
+    httpOnly: true,
+    expires: new Date(0),
+    secure: isProduction ? true : false,
+    sameSite: isProduction ? 'none' : 'lax',
+    path: '/'
+  };
+};
+
 const setUserTokenCookie = (res, userId) => {
   const secret = process.env.JWT_USER_SECRET;
   if (!secret) {
@@ -12,15 +34,7 @@ const setUserTokenCookie = (res, userId) => {
     expiresIn: '7d',
   });
 
-  const cookieOptions = {
-    expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
-    path: '/'
-  };
-
-  res.cookie(USER_COOKIE, token, cookieOptions);
+  res.cookie(USER_COOKIE, token, getCookieOptions());
   return token;
 };
 
@@ -42,15 +56,7 @@ const sendAdminToken = (res, adminId, statusCode = 200, extraData = {}) => {
     expiresIn: '7d',
   });
 
-  const cookieOptions = {
-    expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
-    path: '/'
-  };
-
-  res.cookie(ADMIN_COOKIE, token, cookieOptions);
+  res.cookie(ADMIN_COOKIE, token, getCookieOptions());
 
   return res.status(statusCode).json({
     success: true,
@@ -59,21 +65,11 @@ const sendAdminToken = (res, adminId, statusCode = 200, extraData = {}) => {
 };
 
 const clearUserToken = (res) => {
-  res.cookie(USER_COOKIE, '', {
-    httpOnly: true,
-    expires: new Date(0),
-    sameSite: 'lax',
-    path: '/'
-  });
+  res.cookie(USER_COOKIE, '', getClearCookieOptions());
 };
 
 const clearAdminToken = (res) => {
-  res.cookie(ADMIN_COOKIE, '', {
-    httpOnly: true,
-    expires: new Date(0),
-    sameSite: 'lax',
-    path: '/'
-  });
+  res.cookie(ADMIN_COOKIE, '', getClearCookieOptions());
 };
 
 module.exports = {
