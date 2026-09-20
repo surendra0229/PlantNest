@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PlantCarousel from '../components/common/PlantCarousel';
 import {
   ArrowRight,
   Leaf,
@@ -84,28 +85,10 @@ const LandingPage = () => {
 
             </div>
 
-            {/* Hero Image Showcase */}
+            {/* Hero Auto-Sliding Plant/Tree Showcase Carousel */}
             <div className="relative">
-              <div className="relative mx-auto max-w-md lg:max-w-none">
-                <div className="aspect-square rounded-3xl overflow-hidden bg-gradient-to-br from-emerald-900 via-emerald-950 to-teal-950 p-8 border border-emerald-500/40 shadow-2xl animate-float flex flex-col justify-between text-white">
-                  <div className="space-y-2">
-                    <span className="px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-emerald-500/30 text-emerald-300 border border-emerald-400/40">
-                      🌿 PlantNest Botanical Sanctuary
-                    </span>
-                    <h3 className="text-2xl font-black text-white pt-2">
-                      Live Plant E-Commerce & AI Assistant
-                    </h3>
-                  </div>
-
-                  <div className="text-center py-6 text-7xl">
-                    🪴
-                  </div>
-
-                  <div className="p-4 rounded-2xl bg-emerald-900/80 border border-emerald-700 text-xs space-y-1">
-                    <p className="font-extrabold text-emerald-300">Live Inventory Stream</p>
-                    <p className="text-emerald-100/80 text-[11px]">Real-time database catalog directly from master nurseries across India.</p>
-                  </div>
-                </div>
+              <div className="relative mx-auto max-w-lg lg:max-w-none">
+                <PlantCarousel />
               </div>
             </div>
 
