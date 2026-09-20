@@ -213,7 +213,7 @@ const deleteAddress = async (req, res, next) => {
 // @route   GET /api/auth/google
 // @access  Public
 const googleAuth = (req, res, next) => {
-  const clientUrl = (process.env.CLIENT_URL || 'https://plant-nest.vercel.app').replace(/\/$/, '');
+  const clientUrl = (process.env.CLIENT_URL || req.headers.origin || req.headers.referer || 'https://plant-nest-alpha.vercel.app').replace(/\/$/, '');
   const clientId = process.env.GOOGLE_CLIENT_ID;
   const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
 
@@ -240,7 +240,7 @@ const googleAuth = (req, res, next) => {
 // @access  Public
 const googleAuthCallback = (req, res, next) => {
   passport.authenticate('google', { session: false }, (err, user, info) => {
-    const clientUrl = (process.env.CLIENT_URL || 'https://plant-nest.vercel.app').replace(/\/$/, '');
+    const clientUrl = (process.env.CLIENT_URL || req.headers.origin || req.headers.referer || 'https://plant-nest-alpha.vercel.app').replace(/\/$/, '');
 
     if (err) {
       console.error('Google OAuth Authentication Error:', err);
@@ -254,11 +254,11 @@ const googleAuthCallback = (req, res, next) => {
     }
 
     try {
-      // Generate & set HTTP-only cookie with app's JWT
-      setUserTokenCookie(res, user._id);
+      // Generate & set HTTP-only cookie with app's JWT, and return token for cross-site storage
+      const token = setUserTokenCookie(res, user._id);
 
-      // Redirect to frontend dashboard with success query parameter
-      return res.redirect(`${clientUrl}/dashboard?oauth=success`);
+      // Redirect to frontend dashboard with success query parameter and token
+      return res.redirect(`${clientUrl}/dashboard?oauth=success&token=${token}`);
     } catch (tokenError) {
       console.error('JWT Token Error during Google OAuth:', tokenError);
       return res.redirect(`${clientUrl}/login?error=Token%20Generation%20Failed`);

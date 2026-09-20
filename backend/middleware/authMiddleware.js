@@ -6,8 +6,12 @@ const { USER_COOKIE, ADMIN_COOKIE } = require('../utils/jwt');
 // Protect User Routes
 const protectUser = async (req, res, next) => {
   let token;
-  if (req.cookies && req.cookies[USER_COOKIE]) {
-    token = req.cookies[USER_COOKIE];
+
+  // Check Authorization header first (Bearer <token>), fallback to HttpOnly cookie
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+    token = req.headers.authorization.split(' ')[1];
+  } else if (req.cookies && (req.cookies[USER_COOKIE] || req.cookies.userToken || req.cookies.token)) {
+    token = req.cookies[USER_COOKIE] || req.cookies.userToken || req.cookies.token;
   }
 
   if (!token) {
@@ -18,13 +22,13 @@ const protectUser = async (req, res, next) => {
   }
 
   try {
-    const secret = process.env.JWT_USER_SECRET;
+    const secret = process.env.JWT_USER_SECRET || process.env.JWT_SECRET;
     if (!secret) {
       return res.status(500).json({ success: false, message: 'Server configuration error: JWT_USER_SECRET missing.' });
     }
     const decoded = jwt.verify(token, secret);
 
-    if (decoded.role !== 'user') {
+    if (decoded.role && decoded.role !== 'user' && decoded.role !== 'admin') {
       return res.status(403).json({
         success: false,
         message: 'Forbidden: Invalid user role token.'
@@ -52,8 +56,12 @@ const protectUser = async (req, res, next) => {
 // Protect Admin Routes
 const protectAdmin = async (req, res, next) => {
   let token;
-  if (req.cookies && req.cookies[ADMIN_COOKIE]) {
-    token = req.cookies[ADMIN_COOKIE];
+
+  // Check Authorization header first (Bearer <token>), fallback to HttpOnly cookie
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+    token = req.headers.authorization.split(' ')[1];
+  } else if (req.cookies && (req.cookies[ADMIN_COOKIE] || req.cookies.adminToken || req.cookies.token)) {
+    token = req.cookies[ADMIN_COOKIE] || req.cookies.adminToken || req.cookies.token;
   }
 
   if (!token) {
@@ -64,7 +72,7 @@ const protectAdmin = async (req, res, next) => {
   }
 
   try {
-    const secret = process.env.JWT_ADMIN_SECRET;
+    const secret = process.env.JWT_ADMIN_SECRET || process.env.JWT_SECRET;
     if (!secret) {
       return res.status(500).json({ success: false, message: 'Server configuration error: JWT_ADMIN_SECRET missing.' });
     }

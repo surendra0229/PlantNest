@@ -95,6 +95,7 @@ app.use(helmet({
 // CORS Configuration — allow frontend dev & production origins
 const allowedOrigins = [
   process.env.CLIENT_URL,
+  'https://plant-nest-alpha.vercel.app',
   'https://plant-nest.vercel.app',
   'https://plantnest-rcp4.onrender.com',
   'http://localhost:5173',

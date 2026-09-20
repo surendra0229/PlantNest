@@ -44,6 +44,14 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    // Check if token was passed in URL query params (e.g. Google OAuth redirect)
+    const urlParams = new URLSearchParams(window.location.search);
+    const oauthToken = urlParams.get('token');
+    if (oauthToken) {
+      localStorage.setItem('plantnest_token', oauthToken);
+      localStorage.setItem('token', oauthToken);
+    }
+
     checkUserAuth();
     checkAdminAuth();
   }, []);
@@ -52,6 +60,10 @@ export const AuthProvider = ({ children }) => {
     const data = await authService.login(credentials);
     if (data.success && data.user) {
       setUser(data.user);
+      if (data.token) {
+        localStorage.setItem('plantnest_token', data.token);
+        localStorage.setItem('token', data.token);
+      }
     }
     return data;
   };
@@ -67,6 +79,8 @@ export const AuthProvider = ({ children }) => {
     } catch (e) {
       // ignore
     } finally {
+      localStorage.removeItem('plantnest_token');
+      localStorage.removeItem('token');
       setUser(null);
     }
   };
@@ -75,6 +89,10 @@ export const AuthProvider = ({ children }) => {
     const data = await adminService.login(credentials);
     if (data.success && data.admin) {
       setAdmin(data.admin);
+      if (data.token) {
+        localStorage.setItem('plantnest_admin_token', data.token);
+        localStorage.setItem('adminToken', data.token);
+      }
     }
     return data;
   };
@@ -85,6 +103,8 @@ export const AuthProvider = ({ children }) => {
     } catch (e) {
       // ignore
     } finally {
+      localStorage.removeItem('plantnest_admin_token');
+      localStorage.removeItem('adminToken');
       setAdmin(null);
     }
   };

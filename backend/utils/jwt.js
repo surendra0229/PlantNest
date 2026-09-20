@@ -39,16 +39,17 @@ const setUserTokenCookie = (res, userId) => {
 };
 
 const sendUserToken = (res, userId, statusCode = 200, extraData = {}) => {
-  setUserTokenCookie(res, userId);
+  const token = setUserTokenCookie(res, userId);
 
   return res.status(statusCode).json({
     success: true,
+    token,
     ...extraData
   });
 };
 
 const sendAdminToken = (res, adminId, statusCode = 200, extraData = {}) => {
-  const secret = process.env.JWT_ADMIN_SECRET;
+  const secret = process.env.JWT_ADMIN_SECRET || process.env.JWT_SECRET;
   if (!secret) {
     throw new Error('JWT_ADMIN_SECRET is missing in process.env');
   }
@@ -60,6 +61,7 @@ const sendAdminToken = (res, adminId, statusCode = 200, extraData = {}) => {
 
   return res.status(statusCode).json({
     success: true,
+    token,
     ...extraData
   });
 };

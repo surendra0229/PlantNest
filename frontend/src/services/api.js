@@ -9,12 +9,23 @@ export const getBackendUrl = () => {
 const API_BASE = (import.meta.env.VITE_API_URL || 'https://plantnest-rcp4.onrender.com/api').replace(/\/$/, '');
 
 export const apiCall = async (endpoint, method = 'GET', data = null) => {
+  const token = localStorage.getItem('plantnest_admin_token') ||
+                localStorage.getItem('adminToken') ||
+                localStorage.getItem('plantnest_token') ||
+                localStorage.getItem('token');
+
+  const headers = {
+    'Content-Type': 'application/json',
+  };
+
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
+
   const options = {
     method,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    credentials: 'include', // CRITICAL for sending and receiving HttpOnly cookies!
+    headers,
+    credentials: 'include', // Send and receive HttpOnly cookies when allowed
   };
 
   if (data && ['POST', 'PUT', 'PATCH', 'DELETE'].includes(method.toUpperCase())) {
