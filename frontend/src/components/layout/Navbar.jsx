@@ -163,8 +163,8 @@ const Navbar = () => {
 
           </div>
 
-          {/* Search Bar */}
-          <div ref={searchContainerRef} className="flex-1 max-w-xl mx-1 sm:mx-4 relative">
+          {/* Search Bar (Desktop View) */}
+          <div ref={searchContainerRef} className="hidden md:block flex-1 max-w-xl mx-4 relative">
             <form onSubmit={handleSearchSubmit} className="relative flex items-center">
               <input
                 type="text"
@@ -374,6 +374,27 @@ const Navbar = () => {
           </div>
 
         </div>
+
+        {/* Mobile Dedicated Full-Width Search Input (< md) */}
+        <div className="md:hidden pt-1 pb-2">
+          <form onSubmit={handleSearchSubmit} className="relative flex items-center">
+            <input
+              type="text"
+              placeholder="Search Plants, Seeds, Care Kits, Pots..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-400 text-xs font-semibold rounded-xl py-2 pl-3 pr-9 focus:outline-none focus:ring-2 focus:ring-amber-400 border border-transparent dark:border-slate-700 shadow-sm"
+            />
+            <button
+              type="submit"
+              className="absolute right-1.5 p-1 rounded-lg bg-emerald-700 hover:bg-emerald-800 dark:bg-emerald-600 text-white transition cursor-pointer"
+              title="Search Products"
+            >
+              <Search className="w-3.5 h-3.5" />
+            </button>
+          </form>
+        </div>
+
       </div>
 
       {/* Mobile Navigation Drawer */}

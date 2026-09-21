@@ -188,28 +188,28 @@ const Profile = () => {
         ) : (
           <div className="bg-white dark:bg-slate-900 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm">
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs">
+              <table className="w-full text-left text-xs whitespace-nowrap">
                 <thead className="bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-b border-slate-200 dark:border-slate-700 font-bold uppercase tracking-wider">
                   <tr>
-                    <th className="p-4">Order ID</th>
-                    <th className="p-4">Date</th>
-                    <th className="p-4">Total Amount</th>
-                    <th className="p-4">Status</th>
-                    <th className="p-4 text-right">Action</th>
+                    <th className="p-3 sm:p-4">Order ID</th>
+                    <th className="p-3 sm:p-4">Date</th>
+                    <th className="p-3 sm:p-4">Total Amount</th>
+                    <th className="p-3 sm:p-4">Status</th>
+                    <th className="p-3 sm:p-4 text-right">Action</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100 dark:divide-slate-800 text-slate-800 dark:text-slate-200">
                   {orders.map((ord) => (
-                    <tr key={ord._id} className="hover:bg-slate-50 dark:hover:bg-slate-800/60">
-                      <td className="p-4 font-mono font-bold text-emerald-700 dark:text-emerald-400">{ord._id}</td>
-                      <td className="p-4 font-medium">{new Date(ord.createdAt).toLocaleDateString()}</td>
-                      <td className="p-4 font-black text-slate-900 dark:text-white">₹{ord.totalAmount}</td>
-                      <td className="p-4">
+                    <tr key={ord._id} className="hover:bg-slate-50 dark:hover:bg-slate-800/60 transition">
+                      <td className="p-3 sm:p-4 font-mono font-bold text-emerald-700 dark:text-emerald-400">#{ord._id.slice(-8)}</td>
+                      <td className="p-3 sm:p-4 font-medium">{new Date(ord.createdAt).toLocaleDateString()}</td>
+                      <td className="p-3 sm:p-4 font-black text-slate-900 dark:text-white">₹{ord.totalAmount}</td>
+                      <td className="p-3 sm:p-4">
                         <span className="px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700">
                           {ord.orderStatus}
                         </span>
                       </td>
-                      <td className="p-4 text-right">
+                      <td className="p-3 sm:p-4 text-right">
                         <Link
                           to={`/orders/${ord._id}`}
                           className="px-3 py-1.5 rounded-lg bg-emerald-50 dark:bg-slate-800 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-100 font-extrabold text-xs transition"

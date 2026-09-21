@@ -141,7 +141,7 @@ const UserDashboard = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
           
           {/* Main Hero Card */}
-          <div className="lg:col-span-7 relative rounded-3xl overflow-hidden shadow-2xl min-h-[340px] sm:min-h-[380px] flex flex-col justify-between p-8 sm:p-10 text-white bg-gradient-to-br from-emerald-950 via-teal-950 to-slate-950 border border-emerald-800/60 group">
+          <div className="lg:col-span-7 relative rounded-3xl overflow-hidden shadow-2xl min-h-[320px] sm:min-h-[380px] flex flex-col justify-between p-6 sm:p-8 md:p-10 text-white bg-gradient-to-br from-emerald-950 via-teal-950 to-slate-950 border border-emerald-800/60 group">
             
             <div className="relative z-10 space-y-2">
               <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-[10px] font-black uppercase tracking-widest bg-emerald-500 text-slate-950 shadow">

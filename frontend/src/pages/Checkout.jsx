@@ -668,7 +668,7 @@ const Checkout = () => {
         </div>
 
         {/* Right Column (5 Cols): Order Summary & Final Payable Button */}
-        <div className="lg:col-span-5 bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-6 sticky top-24">
+        <div className="lg:col-span-5 bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-6 lg:sticky lg:top-24">
           
           <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
             <h3 className="font-black text-lg text-slate-900 dark:text-white">

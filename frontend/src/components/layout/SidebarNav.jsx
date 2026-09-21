@@ -144,7 +144,7 @@ const SidebarNav = () => {
       {/* 3. Mobile Slide-Out Category Drawer */}
       {mobileOpen && (
         <div className="md:hidden fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm flex">
-          <div className="w-72 bg-white dark:bg-slate-900 h-full flex flex-col shadow-2xl border-r border-slate-200 dark:border-slate-800">
+          <div className="w-72 max-w-[85vw] bg-white dark:bg-slate-900 h-full flex flex-col shadow-2xl border-r border-slate-200 dark:border-slate-800">
             <div className="p-4 bg-emerald-700 dark:bg-slate-800 text-white flex justify-between items-center">
               <div className="flex items-center gap-2 font-black text-sm">
                 <Leaf className="w-5 h-5 text-amber-300" />

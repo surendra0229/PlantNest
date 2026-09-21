@@ -99,7 +99,7 @@ const AdminOrders = () => {
       {/* Orders Table Container */}
       <div className="rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs">
+          <table className="w-full text-left text-xs whitespace-nowrap">
             <thead className="bg-slate-50 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 border-b border-slate-200 dark:border-slate-800 font-extrabold uppercase tracking-wider">
               <tr>
                 <th className="p-4">Order ID</th>

@@ -49,7 +49,7 @@ const LandingNavbar = () => {
           </nav>
 
           {/* Desktop Auth Buttons: Login / Register */}
-          <div className="hidden sm:flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-3">
             <Link
               to="/login"
               className="px-5 py-2.5 rounded-xl border border-emerald-500/30 dark:border-emerald-500/40 text-slate-800 dark:text-slate-100 font-extrabold text-xs hover:border-emerald-500 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition shadow-sm"

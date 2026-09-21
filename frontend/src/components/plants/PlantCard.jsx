@@ -84,8 +84,8 @@ const PlantCard = ({ plant }) => {
         {/* Plant Details */}
         <div className="p-4 space-y-2">
           
-          <div className="flex items-center justify-between text-[11px] font-bold text-emerald-700 dark:text-emerald-400">
-            <span className="truncate max-w-[140px] uppercase tracking-wider">{plant.category}</span>
+          <div className="flex items-center justify-between text-[11px] font-bold text-emerald-700 dark:text-emerald-400 gap-2 min-w-0">
+            <span className="truncate uppercase tracking-wider min-w-0">{plant.category}</span>
             
             {/* Rating Badge */}
             <div className="flex items-center gap-1 bg-emerald-700 dark:bg-emerald-600 text-white font-black text-[11px] px-2 py-0.5 rounded-md shadow-sm">

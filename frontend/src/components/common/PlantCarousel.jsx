@@ -50,37 +50,39 @@ const FALLBACK_PLANTS = [
   }
 ];
 
-const PlantCarousel = () => {
-  const [slides, setSlides] = useState([]);
+let carouselCache = null;
+
+const PlantCarousel = ({ initialPlants }) => {
+  const [slides, setSlides] = useState(() => carouselCache || initialPlants || FALLBACK_PLANTS);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!carouselCache && !initialPlants);
 
-  // Fetch real plants from API, fallback to fallback array
+  // Fetch real plants from API with fast limit and instant cache
   useEffect(() => {
     let isMounted = true;
+    if (carouselCache) {
+      setSlides(carouselCache);
+      setLoading(false);
+      return;
+    }
+
     const fetchCatalog = async () => {
       try {
-        setLoading(true);
-        const res = await plantService.getPlants({ limit: 20 });
+        const res = await plantService.getPlants({ limit: 6 });
         if (isMounted && res && res.success && Array.isArray(res.plants) && res.plants.length > 0) {
-          // Filter plants with valid image URLs
           const validPlants = res.plants.filter((p) => {
             const hasImg = p.images && p.images.length > 0 && Boolean(p.images[0]);
             return hasImg && (p.stock === undefined || p.stock > 0);
           });
 
           if (validPlants.length > 0) {
+            carouselCache = validPlants;
             setSlides(validPlants);
-          } else {
-            setSlides(FALLBACK_PLANTS);
           }
-        } else {
-          if (isMounted) setSlides(FALLBACK_PLANTS);
         }
       } catch (err) {
         console.warn('Carousel API load warning:', err.message);
-        if (isMounted) setSlides(FALLBACK_PLANTS);
       } finally {
         if (isMounted) setLoading(false);
       }

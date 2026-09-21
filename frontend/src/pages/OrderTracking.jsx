@@ -149,12 +149,12 @@ const OrderTracking = () => {
             {/* Stepper Indicator */}
             {order.orderStatus !== 'Cancelled' ? (
               <div className="py-4">
-                <div className="grid grid-cols-4 gap-2 text-center">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-2 text-center">
                   {steps.map((step, idx) => {
                     const StepIcon = step.icon;
                     const isCompleted = currentStep >= idx;
                     return (
-                      <div key={step.title} className="flex flex-col items-center gap-2">
+                      <div key={step.title} className="flex flex-col items-center gap-2 p-2 rounded-2xl bg-slate-50 dark:bg-slate-800/60 sm:bg-transparent sm:dark:bg-transparent border border-slate-200/60 dark:border-slate-700/60 sm:border-0">
                         <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-xs transition ${
                           isCompleted
                             ? 'bg-emerald-700 dark:bg-emerald-600 text-white shadow-md'
